@@ -17,11 +17,16 @@ const mapDispatchToProps = (dispatch: any) => ({
   decrementByValue: (value: number) => dispatch(decrementByValueAsync(value))
 });
 
+const mapStateToProps = (state: any) => ({
+  isLoading: state.isLoading
+})
+
 interface AppProps {
   increment: () => any;
   decrement: () => any;
   incrementByValue: (value: number) => any;
   decrementByValue: (value: number) => any;
+  isLoading: boolean;
 };
 
 interface AppState {
@@ -51,8 +56,8 @@ class App extends React.Component<AppProps, AppState> {
       <div className="App">
         <Value />
         <div style={{ marginBottom: 16 }}>
-          <Button text="Увеличить" onClick={this.props.increment} />
-          <Button text="Уменьшить" onClick={this.props.decrement} />
+          <Button text="Увеличить" onClick={this.props.increment} disabled={this.props.isLoading} />
+          <Button text="Уменьшить" onClick={this.props.decrement} disabled={this.props.isLoading}/>
         </div>
         <div>
           <input
@@ -66,12 +71,14 @@ class App extends React.Component<AppProps, AppState> {
               onClick={() => {
                 this.props.incrementByValue(+value);
               }}
+              disabled={this.props.isLoading}
             />
             <Button
               text="Уменьшить на значение"
               onClick={() => {
                 this.props.decrementByValue(+value);
               }}
+              disabled={this.props.isLoading}
             />
           </div>
         </div>
@@ -81,4 +88,4 @@ class App extends React.Component<AppProps, AppState> {
   
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

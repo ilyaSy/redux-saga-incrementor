@@ -1,28 +1,28 @@
-import { put, takeEvery } from "redux-saga/effects";
+import { put, call, takeEvery } from "redux-saga/effects";
 import { operationLoading, operationSuccess } from "./actions";
 import { makeOperation } from "../api";
 
 function* increment() {
   yield put(operationLoading());
-  makeOperation();
+  yield call(makeOperation);
   yield put(operationSuccess(1));
 }
 
 function* decrement() {
   yield put(operationLoading());
-  makeOperation();
+  yield call(makeOperation);
   yield put(operationSuccess(-1));
 }
 
 function* incrementByValue({ payload }: any) {
   yield put(operationLoading());
-  makeOperation();
+  yield call(makeOperation);
   yield put(operationSuccess(payload));
 }
 
 function* decrementByValue({ payload }: any) {
   yield put(operationLoading());
-  makeOperation();
+  yield call(makeOperation);
   yield put(operationSuccess(-payload));
 }
 
